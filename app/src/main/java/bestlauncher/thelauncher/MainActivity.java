@@ -26,6 +26,8 @@ public class MainActivity extends Activity implements
 
     private float x1, x2, y1, y2;
     final float MIN_DISTANCE = 200f;
+    String[][] applist = {{"com.google.android.youtube","youtube"},{"com.facebook.katana","facebook"},
+            {"com.facebook.orca","messenger"},{"com.snapchat.android", "snapchat"}};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,14 +99,18 @@ public class MainActivity extends Activity implements
                 if (Math.abs(deltaX) > MIN_DISTANCE) {
                     // Left to Right swipe action
                     if (x2 > x1) {
-                        Toast.makeText(this, "Left to Right swipe", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(this, "Left to Right swipe", Toast.LENGTH_SHORT).show();
+                        PackageManager managerclock = getPackageManager();
+                        Intent i = managerclock.getLaunchIntentForPackage(applist[0][0]);
+                        i.addCategory(Intent.CATEGORY_LAUNCHER);
+                        startActivity(i);
                     }
 
                     // Right to left swipe action
                     else {
-                        Toast.makeText(this, "Right to Left swipe", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(this, "Right to Left swipe", Toast.LENGTH_SHORT).show();
                         PackageManager managerclock = getPackageManager();
-                        Intent i = managerclock.getLaunchIntentForPackage("com.facebook.katana");
+                        Intent i = managerclock.getLaunchIntentForPackage(applist[1][0]);
                         i.addCategory(Intent.CATEGORY_LAUNCHER);
                         startActivity(i);
                     }
@@ -112,17 +118,17 @@ public class MainActivity extends Activity implements
                 } else if (Math.abs(deltaY) > MIN_DISTANCE) {
                     //up down swipe
                     if (y2 > y1) {
-                        Toast.makeText(this, "Up to Down swipe", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(this, "Up to Down swipe", Toast.LENGTH_SHORT).show();
                         PackageManager managerclock = getPackageManager();
-                        Intent i = managerclock.getLaunchIntentForPackage("com.facebook.orca");
+                        Intent i = managerclock.getLaunchIntentForPackage(applist[2][0]);
                         i.addCategory(Intent.CATEGORY_LAUNCHER);
                         startActivity(i);
                     }
                     // down up swipe
                     else {
-                        Toast.makeText(this, "Down to Up swipe", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(this, "Down to Up swipe", Toast.LENGTH_SHORT).show();
                         PackageManager managerclock = getPackageManager();
-                        Intent i = managerclock.getLaunchIntentForPackage("com.snapchat.android");
+                        Intent i = managerclock.getLaunchIntentForPackage(applist[3][0]);
                         i.addCategory(Intent.CATEGORY_LAUNCHER);
                         startActivity(i);
                     }

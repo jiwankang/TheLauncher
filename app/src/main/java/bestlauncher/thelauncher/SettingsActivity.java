@@ -28,12 +28,8 @@ public class SettingsActivity extends Activity {
         content.setText("APP NAME");
         rl.addView(content);
 
-
-try {
     content = new TextView(getApplicationContext());
     content.setText("I’ve replaced the label");
     rl.addView(content);
-}catch (Exception e) {
-    }
 }}
 
