@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
@@ -20,8 +23,18 @@ public class MainActivity extends Activity {
         //Set up our Lockscreen
         makeFullScreen();
         startService(new Intent(this,LockScreenService.class));
-
         setContentView(R.layout.activity_main);
+
+        RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
+
+        TextView dateView = (TextView) findViewById(R.id.dateView);
+        dateView.setText(DateUtils.formatDateTime(this, System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE | DateUtils.FORMAT_12HOUR));
+        dateView.setTextSize(30);
+
+        GesturePadView myGesturePad = new GesturePadView(this);
+        mainLayout.addView(myGesturePad);
+
+
     }
 
     /**
@@ -45,7 +58,7 @@ public class MainActivity extends Activity {
         return; //Do nothing!
     }
 
-    public void unlockScreen(View view) {
+    public void unlockScreen() {
         //Instead of using finish(), this totally destroys the process
         android.os.Process.killProcess(android.os.Process.myPid());
     }
