@@ -17,6 +17,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity implements
@@ -28,22 +34,11 @@ public class MainActivity extends Activity implements
 
     private float x1, x2, y1, y2;
     final float MIN_DISTANCE = 200f;
-    String[][] applist = {{"com.google.android.youtube","youtube"},{"com.facebook.katana","facebook"},
-            {"com.facebook.orca","messenger"},{"com.snapchat.android", "snapchat"}};
+    String[] applist = new String[4];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-//        ArrayList<String[]> list = new ArrayList<>();
-//        list.add(applist[0]);
-//        list.add(applist[1]);
-//        list.add(applist[2]);
-//        list.add(applist[3]);
-
-//        Intent i = new Intent(MainActivity.this,SettingsActivity.class);
-//        i.putExtra("key", list);
-//        startActivity(i);
 
         getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED | WindowManager.LayoutParams.FLAG_FULLSCREEN |
@@ -96,7 +91,7 @@ public class MainActivity extends Activity implements
     public boolean onTouchEvent(MotionEvent event) {
         // TextView tv = (TextView)findViewById(R.id.testOutput);
         // tv.setText(event.getX() + "," + event.getY());
-
+        getSettings();
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 x1 = event.getX();
@@ -113,7 +108,7 @@ public class MainActivity extends Activity implements
                     if (x2 > x1) {
 //                        Toast.makeText(this, "Left to Right swipe", Toast.LENGTH_SHORT).show();
                         PackageManager managerclock = getPackageManager();
-                        Intent i = managerclock.getLaunchIntentForPackage(applist[0][0]);
+                        Intent i = managerclock.getLaunchIntentForPackage(applist[0]);
                         i.addCategory(Intent.CATEGORY_LAUNCHER);
                         startActivity(i);
                         finish();
@@ -123,7 +118,7 @@ public class MainActivity extends Activity implements
                     else {
 //                        Toast.makeText(this, "Right to Left swipe", Toast.LENGTH_SHORT).show();
                         PackageManager managerclock = getPackageManager();
-                        Intent i = managerclock.getLaunchIntentForPackage(applist[1][0]);
+                        Intent i = managerclock.getLaunchIntentForPackage(applist[1]);
                         i.addCategory(Intent.CATEGORY_LAUNCHER);
                         startActivity(i);
                         finish();
@@ -134,7 +129,7 @@ public class MainActivity extends Activity implements
                     if (y2 > y1) {
 //                        Toast.makeText(this, "Up to Down swipe", Toast.LENGTH_SHORT).show();
                         PackageManager managerclock = getPackageManager();
-                        Intent i = managerclock.getLaunchIntentForPackage(applist[2][0]);
+                        Intent i = managerclock.getLaunchIntentForPackage(applist[2]);
                         i.addCategory(Intent.CATEGORY_LAUNCHER);
                         startActivity(i);
                         finish();
@@ -143,7 +138,7 @@ public class MainActivity extends Activity implements
                     else {
 //                        Toast.makeText(this, "Down to Up swipe", Toast.LENGTH_SHORT).show();
                         PackageManager managerclock = getPackageManager();
-                        Intent i = managerclock.getLaunchIntentForPackage(applist[3][0]);
+                        Intent i = managerclock.getLaunchIntentForPackage(applist[3]);
                         i.addCategory(Intent.CATEGORY_LAUNCHER);
                         startActivity(i);
                         finish();
@@ -208,5 +203,22 @@ public class MainActivity extends Activity implements
     public boolean onSingleTapConfirmed(MotionEvent event) {
         Log.d(DEBUG_TAG, "onSingleTapConfirmed: " + event.toString());
         return true;
+    }
+
+    public void getSettings(){
+        try {
+            File file = new File(getExternalFilesDir(""), "settings.csv");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+            String fullLine;
+            while((fullLine = reader.readLine()) != null) {
+                if (fullLine.contains(",")) {
+                    String[] separatedText = fullLine.split(",");
+                    applist[Integer.parseInt(separatedText[1])] = separatedText[0];
+                }
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
+        } catch (IOException e2) {
+        }
     }
 }
