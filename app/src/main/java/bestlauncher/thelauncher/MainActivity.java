@@ -17,6 +17,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends Activity implements
         GestureDetector.OnGestureListener,
         GestureDetector.OnDoubleTapListener {
@@ -32,6 +34,16 @@ public class MainActivity extends Activity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        ArrayList<String[]> list = new ArrayList<>();
+//        list.add(applist[0]);
+//        list.add(applist[1]);
+//        list.add(applist[2]);
+//        list.add(applist[3]);
+
+//        Intent i = new Intent(MainActivity.this,SettingsActivity.class);
+//        i.putExtra("key", list);
+//        startActivity(i);
 
         getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED | WindowManager.LayoutParams.FLAG_FULLSCREEN |
@@ -104,6 +116,7 @@ public class MainActivity extends Activity implements
                         Intent i = managerclock.getLaunchIntentForPackage(applist[0][0]);
                         i.addCategory(Intent.CATEGORY_LAUNCHER);
                         startActivity(i);
+                        finish();
                     }
 
                     // Right to left swipe action
@@ -113,6 +126,7 @@ public class MainActivity extends Activity implements
                         Intent i = managerclock.getLaunchIntentForPackage(applist[1][0]);
                         i.addCategory(Intent.CATEGORY_LAUNCHER);
                         startActivity(i);
+                        finish();
                     }
 
                 } else if (Math.abs(deltaY) > MIN_DISTANCE) {
@@ -123,6 +137,7 @@ public class MainActivity extends Activity implements
                         Intent i = managerclock.getLaunchIntentForPackage(applist[2][0]);
                         i.addCategory(Intent.CATEGORY_LAUNCHER);
                         startActivity(i);
+                        finish();
                     }
                     // down up swipe
                     else {
@@ -131,6 +146,7 @@ public class MainActivity extends Activity implements
                         Intent i = managerclock.getLaunchIntentForPackage(applist[3][0]);
                         i.addCategory(Intent.CATEGORY_LAUNCHER);
                         startActivity(i);
+                        finish();
                     }
                 } else {
                     // consider as something else - a screen tap for example
