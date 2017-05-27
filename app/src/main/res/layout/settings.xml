@@ -32,8 +32,6 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:onClick="onClick"
-        android:clickable="true"
         android:textSize="20dp"/>
 
     <View
@@ -51,8 +49,6 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:onClick="onClick"
-        android:clickable="true"
         android:textSize="20dp"/>
 
     <View
@@ -70,8 +66,6 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:onClick="onClick"
-        android:clickable="true"
         android:textSize="20dp"/>
 
     <View
@@ -89,8 +83,6 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
-        android:onClick="onClick"
-        android:clickable="true"
         android:textSize="20dp"/>
 
 </LinearLayout>

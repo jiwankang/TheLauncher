@@ -3,6 +3,7 @@ package bestlauncher.thelauncher;
 import android.app.Activity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.KeyguardManager;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -39,8 +40,9 @@ public class SettingsActivity extends Activity {
     TextView app1;
     PackageManager pm;
     String[] applist = new String[4];
+    String[] savedSettings = new String[4];
 
-    ArrayList<String> allApps = new ArrayList();
+    CharSequence[] allApps = new String[1000];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,76 +65,166 @@ public class SettingsActivity extends Activity {
 //        rl.addView(content);
 
         getSettings();
-
+        loadApps();
         title = (TextView) findViewById(R.id.Title);
         title.setText("SETTINGS");
 
         app1 = (TextView) findViewById(R.id.app1);
         app1.setText("SWIPE RIGHT");
 
+        app1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
+                builder.setTitle("CHOOSE AN APP");
+                builder.setItems(allApps, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        writeFile(allApps[which], 0);
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.setButton("CONFIRM", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            File file = new File(getExternalFilesDir(""), "settings.csv");
+                            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+                            String fullLine;
+                            while ((fullLine = reader.readLine()) != null) {
+                                if (fullLine.contains(",")) {
+                                    String[] separatedText = fullLine.split(",");
+                                    applist[Integer.parseInt(separatedText[1])] = separatedText[0];
+                                }
+                            }
+                            reader.close();
+
+                        } catch (FileNotFoundException e) {
+                            System.out.print("File not found");
+
+                        } catch (IOException e2) {
+                            System.out.print("IO exception thrown");
+                        }
+                    }
+                });
+                alertDialog.show();
+            }
+        });
+
         app2 = (TextView) findViewById(R.id.app2);
         app2.setText("SWIPE LEFT");
+        app2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
+                builder.setTitle("CHOOSE AN APP");
+                builder.setItems(allApps, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        writeFile(allApps[which], 1);
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.setButton("CONFIRM", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            File file = new File(getExternalFilesDir(""), "settings.csv");
+                            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+                            String fullLine;
+                            while ((fullLine = reader.readLine()) != null) {
+                                if (fullLine.contains(",")) {
+                                    String[] separatedText = fullLine.split(",");
+                                    applist[Integer.parseInt(separatedText[1])] = separatedText[0];
+                                }
+                            }
+                            reader.close();
+
+                        } catch (FileNotFoundException e) {
+                            System.out.print("File not found");
+
+                        } catch (IOException e2) {
+                            System.out.print("IO exception thrown");
+                        }
+                    }
+                });
+                alertDialog.show();
+            }
+        });
 
         app3 = (TextView) findViewById(R.id.app3);
         app3.setText("SWIPE UP");
+        app3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
+                builder.setTitle("CHOOSE AN APP");
+                builder.setItems(allApps, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        writeFile(allApps[which], 2);
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.setButton("CONFIRM", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            File file = new File(getExternalFilesDir(""), "settings.csv");
+                            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+                            String fullLine;
+                            while ((fullLine = reader.readLine()) != null) {
+                                if (fullLine.contains(",")) {
+                                    String[] separatedText = fullLine.split(",");
+                                    applist[Integer.parseInt(separatedText[1])] = separatedText[0];
+                                }
+                            }
+                            reader.close();
+
+                        } catch (FileNotFoundException e) {
+                            System.out.print("File not found");
+
+                        } catch (IOException e2) {
+                            System.out.print("IO exception thrown");
+                        }
+                    }
+                });
+                alertDialog.show();
+            }
+        });
 
         app4 = (TextView) findViewById(R.id.app4);
         app4.setText("SWIPE DOWN");
-
-        Button createButton = new Button(getApplicationContext());
-        createButton.setText("SAVE");
-        createButton.setOnClickListener(new View.OnClickListener() {
-            String packageName, gesture;
+        app4.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
-                try {
-                    File file = new File(getExternalFilesDir(""), "settings.csv");
-                    FileWriter writer = new FileWriter(file.getAbsoluteFile());
-                    PrintWriter printWriter = new PrintWriter(writer);
-                    for(int i=0; i<4; i++){
-                        packageName = "";
-                        gesture = ""+i;
-                        printWriter.println(String.format("%s,%s", packageName,gesture));
+                AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
+                builder.setTitle("CHOOSE AN APP");
+                builder.setItems(allApps, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        writeFile(allApps[which], 3);
                     }
-                    printWriter.close();
-                } catch (IOException e) {
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.setButton("CONFIRM", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            File file = new File(getExternalFilesDir(""), "settings.csv");
+                            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+                            String fullLine;
+                            while ((fullLine = reader.readLine()) != null) {
+                                if (fullLine.contains(",")) {
+                                    String[] separatedText = fullLine.split(",");
+                                    applist[Integer.parseInt(separatedText[1])] = separatedText[0];
+                                }
+                            }
+                            reader.close();
 
-                }
-            }
-        });
-        rl.addView((Button) createButton);
+                        } catch (FileNotFoundException e) {
+                            System.out.print("File not found");
 
-        loadApps(rl);
-    }
-
-    public void onClick(View v) {
-        AlertDialog alertDialog = new AlertDialog.Builder(SettingsActivity.this).create();
-        alertDialog.setTitle("CHOOSE AN APP");
-
-        alertDialog.setButton("CONFIRM", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                try {
-                    File file = new File(getExternalFilesDir(""), "settings.csv");
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-                    String fullLine;
-                    while ((fullLine = reader.readLine()) != null) {
-                        if (fullLine.contains(",")) {
-                            String[] separatedText = fullLine.split(",");
-                            applist[Integer.parseInt(separatedText[1])] = separatedText[0];
+                        } catch (IOException e2) {
+                            System.out.print("IO exception thrown");
                         }
                     }
-                    reader.close();
-
-                } catch (FileNotFoundException e) {
-                    System.out.print("File not found");
-
-                } catch (IOException e2) {
-                    System.out.print("IO exception thrown");
-                }
-    }
-});
-
-        alertDialog.show();
-
+                });
+                alertDialog.show();
+            }
+        });
     }
 
     public void getSettings(){
@@ -151,7 +243,7 @@ public class SettingsActivity extends Activity {
         } catch (IOException e2) {
         }
     }
-    private void loadApps(LinearLayout rl) {
+    private void loadApps() {
 //get a list of installed apps.
         List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 
@@ -163,11 +255,13 @@ public class SettingsActivity extends Activity {
        // ArrayList<String> appNames = new ArrayList<>();
       //  ArrayList<String> packageNames = new ArrayList<>();
 
-        if (packages.size() == availableActivities.size()){
-            createTextView(rl,"SAME");
-        }
+     //   if (packages.size() == availableActivities.size()){
+      //      createTextView(rl,"SAME");
+      //  }
+        int j = 0;
         for (ResolveInfo ri: availableActivities){
-            allApps.add(ri.loadLabel(pm).toString() + "," + ri.activityInfo.packageName);
+            allApps[j] = ri.activityInfo.packageName;
+            j++;
             //  appNames.add(ri.loadLabel(pm).toString());
         }
     }
@@ -180,6 +274,43 @@ public class SettingsActivity extends Activity {
         return tv;
     }
 
+    public void getSavedSettings(){
+        try {
+            File file = new File(getExternalFilesDir(""), "settings.csv");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+            String fullLine;
+            int i=0;
+            while((fullLine = reader.readLine()) != null) {
+                    savedSettings[i] = fullLine;
+                i++;
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
+        } catch (IOException e2) {
+        }
+    }
 
+    public void writeFile(CharSequence newSetting, int gestureNumber) {
+        try {
+            File file = new File(getExternalFilesDir(""), "settings.csv");
+            FileWriter writer = new FileWriter(file.getAbsoluteFile());
+            PrintWriter printWriter = new PrintWriter(writer);
+
+            CharSequence packageName;
+            for (int i = 0; i < 4; i++) {
+                if (i != gestureNumber) {
+                    packageName = savedSettings[i];
+                } else {
+                    packageName = newSetting;
+                }
+                printWriter.println(String.format("%s,%s", packageName, gestureNumber));
+            }
+            printWriter.close();
+            getSavedSettings();
+        } catch (IOException e) {
+
+        }
+
+    }
 }
 
