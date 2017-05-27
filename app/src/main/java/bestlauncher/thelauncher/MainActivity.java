@@ -1,17 +1,21 @@
 package bestlauncher.thelauncher;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED|WindowManager.LayoutParams.FLAG_FULLSCREEN|
+                WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
 
         //Set up our Lockscreen
         makeFullScreen();

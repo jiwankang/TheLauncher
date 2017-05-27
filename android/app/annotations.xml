@@ -1,0 +1,5 @@
+<root>
+    <item name='android.app.KeyguardManager.KeyguardLock void disableKeyguard()'>
+        <annotation name='java.lang.Deprecated' />
+    </item>
+</root>
