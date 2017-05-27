@@ -44,17 +44,16 @@ public class SettingsActivity extends Activity {
         Button createButton = new Button(getApplicationContext());
         createButton.setText("Create File");
         createButton.setOnClickListener(new View.OnClickListener() {
-            float x,y,z;
+            String packageName, gesture;
             public void onClick(View v) {
                 try {
-                    File file = new File(getExternalFilesDir("aaa"), "Lab1.csv");
+                    File file = new File(getExternalFilesDir(""), "settings.csv");
                     FileWriter writer = new FileWriter(file.getAbsoluteFile());
                     PrintWriter printWriter = new PrintWriter(writer);
-                    for(int i=0; i<100; i++){
-                        x = fileContents[i][0];
-                        y = fileContents[i][1];
-                        z = fileContents[i][2];
-                        printWriter.println(String.format("%f,%f,%f", x,y,z));
+                    for(int i=0; i<4; i++){
+                        packageName = "";
+                        gesture = "";
+                        printWriter.println(String.format("%s,%s", packageName,gesture));
                     }
                     printWriter.close();
                 } catch (IOException e) {
