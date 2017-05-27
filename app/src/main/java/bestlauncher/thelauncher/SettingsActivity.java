@@ -1,6 +1,7 @@
 package bestlauncher.thelauncher;
 import android.app.Activity;
 
+import android.app.KeyguardManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
@@ -14,8 +15,7 @@ public class SettingsActivity extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED|WindowManager.LayoutParams.FLAG_FULLSCREEN|
                 WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
 
-
-        startService(new Intent(this,LockScreenService.class));
+        startService(new Intent(this, LockScreenService.class).setAction(Intent.ACTION_SCREEN_OFF));
         setContentView(R.layout.settings);
 
     }

@@ -11,6 +11,8 @@ import android.os.IBinder;
 import android.util.Log;
 import android.view.WindowManager;
 
+import static android.content.Intent.ACTION_SCREEN_OFF;
+
 /**
  * Created by Jiwan Kang on 2017-05-26.
  */
@@ -27,17 +29,10 @@ public class LockScreenService  extends Service {
     @Override
     @SuppressWarnings("deprecation")
     public void onCreate() {
-        KeyguardManager.KeyguardLock key;
-        KeyguardManager km = (KeyguardManager)getSystemService(KEYGUARD_SERVICE);
-
-        //This is deprecated, but it is a simple way to disable the lockscreen in code
-        key = km.newKeyguardLock("IN");
-
-        key.disableKeyguard();
 
         //Start listening for the Screen On, Screen Off, and Boot completed actions
         IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
-        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        filter.addAction(ACTION_SCREEN_OFF);
         filter.addAction(Intent.ACTION_BOOT_COMPLETED);
 
         //Set up a receiver to listen for the Intents in this Service

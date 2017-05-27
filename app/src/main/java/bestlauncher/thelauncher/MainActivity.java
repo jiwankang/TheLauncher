@@ -1,6 +1,7 @@
 package bestlauncher.thelauncher;
 
 import android.app.Activity;
+import android.app.KeyguardManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -29,13 +30,14 @@ public class MainActivity extends Activity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED | WindowManager.LayoutParams.FLAG_FULLSCREEN |
                 WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
 
         //Set up our Lockscreen
         makeFullScreen();
-        startService(new Intent(this, LockScreenService.class));
+        startService(new Intent(this, LockScreenService.class).setAction(Intent.ACTION_SCREEN_OFF));
         setContentView(R.layout.activity_main);
 
         RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
@@ -43,9 +45,6 @@ public class MainActivity extends Activity implements
         TextView dateView = (TextView) findViewById(R.id.dateView);
         dateView.setText(DateUtils.formatDateTime(this, System.currentTimeMillis(), DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE | DateUtils.FORMAT_12HOUR));
         dateView.setTextSize(30);
-
-        GesturePadView myGesturePad = new GesturePadView(this);
-        mainLayout.addView(myGesturePad);
 
         mDetector = new GestureDetectorCompat(this, this);
         // Set the gesture detector as the double tap
